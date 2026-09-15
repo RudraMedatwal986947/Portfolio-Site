@@ -6,7 +6,7 @@ import AmbientGradient from './AmbientGradient';
 import NeuralTensorGraphic from './NeuralTensorGraphic';
 import { personalInfo } from '../data/personalInfo';
 
-const Hero = () => {
+const Hero = ({ onOpenResume }) => {
   return (
     <section id="home" className="relative min-h-[92vh] flex items-center pt-32 pb-20 px-6 overflow-hidden">
       {/* Modern Ambient Mesh Gradient with subtle Purple & Emerald Auras */}
@@ -85,15 +85,14 @@ const Hero = () => {
                 <ArrowDownRight className="w-3.5 h-3.5" />
               </a>
 
-              <a
-                href={personalInfo.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={onOpenResume}
                 className="px-5 py-2.5 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-500/30 text-xs font-medium transition-all flex items-center gap-2 cursor-pointer shadow-sm"
+                title="Preview Official Resume"
               >
                 <FileText className="w-3.5 h-3.5" />
-                <span>Resume (PDF)</span>
-              </a>
+                <span>View Resume</span>
+              </button>
 
               <a
                 href="#contact"

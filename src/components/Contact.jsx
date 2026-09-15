@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Check, Copy, Mail, Phone, Send, MessageSquare } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, Mail, Phone, Send, MessageSquare, Loader2 } from 'lucide-react';
 import { LinkedinIcon, GithubIcon } from './SocialIcons';
 import { personalInfo } from '../data/personalInfo';
 
@@ -7,6 +7,7 @@ const Contact = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   const handleCopyEmail = () => {
@@ -21,10 +22,42 @@ const Contact = () => {
     setTimeout(() => setCopiedPhone(false), 2000);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) return;
-    setSent(true);
+    if (!formData.name || !formData.email || !formData.message) return;
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: 'e3cf559a-514d-495f-972a-9e7978be7b59', // Web3Forms public contact gateway
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          subject: `Portfolio Message from ${formData.name}`,
+          to_email: personalInfo.email,
+        }),
+      });
+
+      const res = await response.json();
+      if (res.success) {
+        setSent(true);
+      } else {
+        // Direct mailto fallback ensures recruiter message is never lost
+        window.location.href = `mailto:${personalInfo.email}?subject=Portfolio Message from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message + '\n\nFrom: ' + formData.name + ' (' + formData.email + ')')}`;
+        setSent(true);
+      }
+    } catch {
+      window.location.href = `mailto:${personalInfo.email}?subject=Portfolio Message from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message + '\n\nFrom: ' + formData.name + ' (' + formData.email + ')')}`;
+      setSent(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -223,10 +256,20 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-emerald-600 hover:from-purple-500 hover:to-emerald-500 text-white text-xs font-medium tracking-wide shadow-md shadow-purple-600/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-emerald-600 hover:from-purple-500 hover:to-emerald-500 text-white text-xs font-medium tracking-wide shadow-md shadow-purple-600/20 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>Send Message</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Transmitting Message...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Send Message</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}

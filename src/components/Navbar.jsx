@@ -5,7 +5,7 @@ import { useTheme } from '../context/useTheme';
 import { personalInfo } from '../data/personalInfo';
 import { LinkedinIcon, GithubIcon } from './SocialIcons';
 
-const Navbar = () => {
+const Navbar = ({ onOpenResume }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -95,20 +95,18 @@ const Navbar = () => {
           </button>
 
           {/* Resume PDF Download/View Button */}
-          <a
-            href={personalInfo.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-mono font-medium px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/30 hover:bg-purple-500/20 transition-all flex items-center gap-1.5"
-            title="View Official Resume (PDF)"
+          <button
+            onClick={onOpenResume}
+            className="text-xs font-mono font-medium px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/30 hover:bg-purple-500/20 transition-all flex items-center gap-1.5 cursor-pointer"
+            title="Preview Official Resume"
           >
             <FileText className="w-3.5 h-3.5" />
             <span>Resume</span>
-          </a>
+          </button>
 
           <a
             href="#contact"
-            className="text-xs font-medium px-3.5 py-1.5 rounded-full border border-neutral-300 dark:border-neutral-800 hover:border-purple-500/40 dark:hover:border-emerald-500/40 text-neutral-800 dark:text-neutral-200 transition-all"
+            className="text-xs font-medium px-3.5 py-1.5 rounded-full border border-neutral-300 dark:border-neutral-800 hover:border-purple-500/40 dark:hover:border-emerald-500/40 text-neutral-800 dark:text-neutral-200 transition-all cursor-pointer"
           >
             Contact
           </a>
@@ -119,14 +117,14 @@ const Navbar = () => {
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="p-2 rounded-full text-neutral-500 dark:text-neutral-400"
+            className="p-2 rounded-full text-neutral-500 dark:text-neutral-400 cursor-pointer"
           >
             {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-neutral-700" />}
           </button>
           <button
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Open menu"
-            className="p-2 text-neutral-700 dark:text-neutral-300"
+            className="p-2 text-neutral-700 dark:text-neutral-300 cursor-pointer"
           >
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -176,15 +174,16 @@ const Navbar = () => {
                   </a>
                 </div>
 
-                <a
-                  href={personalInfo.resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/30"
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    if (onOpenResume) onOpenResume();
+                  }}
+                  className="flex items-center gap-1.5 text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/30 cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Resume</span>
-                </a>
+                </button>
               </div>
 
               <a
