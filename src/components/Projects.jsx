@@ -152,24 +152,34 @@ const Projects = () => {
           </p>
         </div>
 
-        {/* Minimal Category Filter */}
+        {/* Minimal Category Filter with Counts */}
         <div className="flex flex-wrap gap-2 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                filter === cat
-                  ? 'bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 shadow-sm'
-                  : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const count = cat === 'All' ? projects.length : projects.filter((p) => p.category === cat).length;
+            return (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer ${
+                  filter === cat
+                    ? 'bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 shadow-sm font-semibold'
+                    : 'bg-neutral-100/70 dark:bg-neutral-900/60 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white border border-neutral-200/60 dark:border-neutral-800/60'
+                }`}
+              >
+                <span>{cat}</span>
+                <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
+                  filter === cat
+                    ? 'bg-neutral-800 text-white dark:bg-neutral-300 dark:text-neutral-900'
+                    : 'bg-neutral-200/80 dark:bg-neutral-800 text-neutral-500'
+                }`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid with UI/UX Pro Max Hover Elevation */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <AnimatePresence>
             {filtered.map((project) => (
@@ -179,12 +189,12 @@ const Projects = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 15 }}
-                transition={{ duration: 0.4 }}
-                className={`group flex flex-col justify-between p-6 sm:p-7 rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white/50 dark:bg-neutral-900/30 hover:border-purple-500/40 dark:hover:border-emerald-500/40 transition-all duration-300 relative overflow-hidden`}
+                transition={{ duration: 0.3 }}
+                className="group flex flex-col justify-between p-6 sm:p-7 rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white/60 dark:bg-neutral-900/40 hover:border-purple-500/40 dark:hover:border-emerald-500/40 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-purple-500/5 dark:hover:shadow-emerald-500/5 relative overflow-hidden backdrop-blur-sm"
               >
                 {/* Subtle gradient corner highlight */}
                 <div
-                  className={`absolute -top-12 -right-12 w-32 h-32 rounded-full blur-2xl pointer-events-none transition-opacity duration-500 ${
+                  className={`absolute -top-12 -right-12 w-36 h-36 rounded-full blur-2xl pointer-events-none transition-opacity duration-500 ${
                     project.accent === 'purple'
                       ? 'bg-purple-500/10 group-hover:opacity-100'
                       : 'bg-emerald-500/10 group-hover:opacity-100'
@@ -193,11 +203,14 @@ const Projects = () => {
 
                 <div>
                   {/* Minimalist Data Flow Schematic */}
-                  <div className="mb-6 p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-950/60 border border-neutral-200/60 dark:border-neutral-800/60">
+                  <div className="mb-6 p-4 rounded-2xl bg-neutral-50/80 dark:bg-neutral-950/60 border border-neutral-200/60 dark:border-neutral-800/60">
                     <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider mb-2.5 flex items-center justify-between">
-                      <span>Pipeline Flow</span>
+                      <span className="flex items-center gap-1.5">
+                        <Layers className="w-3 h-3 text-purple-500" />
+                        <span>Execution Pipeline</span>
+                      </span>
                       <span className="text-emerald-500 flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Deployed
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Validated
                       </span>
                     </div>
                     
@@ -205,10 +218,10 @@ const Projects = () => {
                       {project.pipeline.map((step, sIdx) => (
                         <div
                           key={sIdx}
-                          className={`p-1.5 rounded-lg text-[10px] font-mono truncate border ${
+                          className={`p-1.5 rounded-lg text-[10px] font-mono truncate border transition-all ${
                             step.type === 'purple'
-                              ? 'bg-purple-50/60 dark:bg-purple-950/30 text-purple-700 dark:text-purple-300 border-purple-500/20'
-                              : 'bg-emerald-50/60 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-500/20'
+                              ? 'bg-purple-50/70 dark:bg-purple-950/30 text-purple-700 dark:text-purple-300 border-purple-500/20 group-hover:border-purple-500/40'
+                              : 'bg-emerald-50/70 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-500/20 group-hover:border-emerald-500/40'
                           }`}
                         >
                           {step.name}
@@ -219,10 +232,10 @@ const Projects = () => {
 
                   {/* Top Meta */}
                   <div className="flex items-center justify-between mb-3 text-xs font-mono text-neutral-400">
-                    <span className="px-2 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300">
+                    <span className="px-2.5 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800/90 text-neutral-700 dark:text-neutral-300 border border-neutral-200/60 dark:border-neutral-700/60 text-[11px]">
                       {project.category}
                     </span>
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 text-[11px]">
                       {project.metrics.map((m, idx) => (
                         <span key={idx}>
                           {m.label}: <strong className={`font-semibold ${m.color}`}>{m.val}</strong>
@@ -248,7 +261,7 @@ const Projects = () => {
                     {project.tags.map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className="text-[11px] font-mono px-2 py-0.5 rounded bg-neutral-100/70 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60 text-neutral-600 dark:text-neutral-400"
+                        className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-neutral-100/70 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60 text-neutral-600 dark:text-neutral-400"
                       >
                         {tag}
                       </span>
@@ -261,7 +274,7 @@ const Projects = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      className="inline-flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-mono"
                     >
                       <Code className="w-3.5 h-3.5" />
                       <span>Code Repository</span>
@@ -269,10 +282,10 @@ const Projects = () => {
 
                     <button
                       onClick={() => setActiveModalProject(project)}
-                      className="inline-flex items-center gap-1 text-neutral-900 dark:text-neutral-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors cursor-pointer"
+                      className="group/btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-500/20 transition-all cursor-pointer font-mono text-xs font-medium"
                     >
                       <span>Case Study</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
+                      <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                     </button>
                   </div>
                 </div>

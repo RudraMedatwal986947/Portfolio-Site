@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, FileText } from 'lucide-react';
+import { Menu, X, Sun, Moon, FileText, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/useTheme';
 import { personalInfo } from '../data/personalInfo';
 import { LinkedinIcon, GithubIcon } from './SocialIcons';
 
-const Navbar = ({ onOpenResume }) => {
+const Navbar = ({ onOpenResume, onOpenPalette }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -81,6 +81,19 @@ const Navbar = ({ onOpenResume }) => {
             <LinkedinIcon className="w-4 h-4" />
           </a>
 
+          {/* Quick Command Launcher */}
+          <button
+            onClick={onOpenPalette}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800/80 hover:bg-neutral-200/70 dark:hover:bg-neutral-700 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 border border-neutral-200/70 dark:border-neutral-700/60 transition-all cursor-pointer text-xs font-mono"
+            title="Open Quick Navigation (Ctrl + K)"
+            aria-label="Open Command Palette"
+          >
+            <Search className="w-3.5 h-3.5" />
+            <kbd className="px-1.5 py-0.2 rounded bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-[10px] font-mono shadow-2xs">
+              ⌘K
+            </kbd>
+          </button>
+
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
@@ -113,7 +126,15 @@ const Navbar = ({ onOpenResume }) => {
         </div>
 
         {/* Mobile controls */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-1.5">
+          <button
+            onClick={onOpenPalette}
+            aria-label="Quick Search"
+            className="p-2 rounded-full text-neutral-500 dark:text-neutral-400 cursor-pointer"
+            title="Quick Search (Ctrl + K)"
+          >
+            <Search className="w-4 h-4" />
+          </button>
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"

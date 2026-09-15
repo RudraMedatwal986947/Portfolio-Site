@@ -287,6 +287,41 @@ const AiDemo = () => {
               
               {/* Sliders Column */}
               <div className="lg:col-span-7 space-y-6">
+                
+                {/* 1-Click Test Profiles */}
+                <div className="p-3 rounded-2xl bg-neutral-100/80 dark:bg-neutral-900/60 border border-neutral-200/60 dark:border-neutral-800/60">
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider flex items-center gap-1">
+                      <Zap className="w-3 h-3 text-purple-500" />
+                      <span>1-Click Test Profiles</span>
+                    </span>
+                    <span className="text-[10px] font-mono text-neutral-400">Interactive Simulation</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => { setTenure(2); setMonthlySpend(135); setSupportTickets(5); setContractType('monthly'); }}
+                      className="text-[11px] font-mono py-1.5 px-2 text-center rounded-xl border border-rose-500/30 bg-rose-500/5 hover:bg-rose-500/10 text-rose-600 dark:text-rose-400 cursor-pointer transition-colors"
+                    >
+                      High Risk (~88%)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setTenure(18); setMonthlySpend(78); setSupportTickets(2); setContractType('one-year'); }}
+                      className="text-[11px] font-mono py-1.5 px-2 text-center rounded-xl border border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 cursor-pointer transition-colors"
+                    >
+                      Average (~42%)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setTenure(56); setMonthlySpend(45); setSupportTickets(0); setContractType('two-year'); }}
+                      className="text-[11px] font-mono py-1.5 px-2 text-center rounded-xl border border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 cursor-pointer transition-colors"
+                    >
+                      Loyal (~11%)
+                    </button>
+                  </div>
+                </div>
+
                 <div>
                   <div className="flex justify-between text-xs font-medium mb-2">
                     <span className="text-neutral-600 dark:text-neutral-400">Customer Tenure</span>
@@ -461,6 +496,40 @@ const AiDemo = () => {
               {/* Sliders Column */}
               <div className="lg:col-span-7 space-y-6">
                 
+                {/* 1-Click Property Presets */}
+                <div className="p-3 rounded-2xl bg-neutral-100/80 dark:bg-neutral-900/60 border border-neutral-200/60 dark:border-neutral-800/60">
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider flex items-center gap-1">
+                      <Zap className="w-3 h-3 text-emerald-500" />
+                      <span>1-Click Property Presets</span>
+                    </span>
+                    <span className="text-[10px] font-mono text-neutral-400">Ames Housing Model</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => { setLivingArea(1050); setOverallQual(4); setYearBuilt(1968); setBathrooms(1); setGarageCars(1); setNeighborhood('Old Town'); }}
+                      className="text-[11px] font-mono py-1.5 px-2 text-center rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white/60 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:border-emerald-500/40 cursor-pointer transition-colors"
+                    >
+                      Starter Cottage
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setLivingArea(1850); setOverallQual(7); setYearBuilt(2005); setBathrooms(2); setGarageCars(2); setNeighborhood('Somerset'); }}
+                      className="text-[11px] font-mono py-1.5 px-2 text-center rounded-xl border border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 cursor-pointer transition-colors"
+                    >
+                      Suburban Family
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setLivingArea(3200); setOverallQual(9); setYearBuilt(2021); setBathrooms(3); setGarageCars(3); setNeighborhood('Northridge'); }}
+                      className="text-[11px] font-mono py-1.5 px-2 text-center rounded-xl border border-purple-500/30 bg-purple-500/5 hover:bg-purple-500/10 text-purple-600 dark:text-purple-400 cursor-pointer transition-colors"
+                    >
+                      Executive Estate
+                    </button>
+                  </div>
+                </div>
+
                 {/* Living Area */}
                 <div>
                   <div className="flex justify-between text-xs font-medium mb-2">
@@ -647,6 +716,40 @@ const AiDemo = () => {
               {/* Left Controls: Model selection & Threshold slider */}
               <div className="lg:col-span-6 space-y-6">
                 
+                {/* 1-Click Operational Targets */}
+                <div className="p-3 rounded-2xl bg-neutral-100/80 dark:bg-neutral-900/60 border border-neutral-200/60 dark:border-neutral-800/60">
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider flex items-center gap-1">
+                      <Zap className="w-3 h-3 text-indigo-500" />
+                      <span>1-Click Threshold Targets</span>
+                    </span>
+                    <span className="text-[10px] font-mono text-neutral-400">Trade-Off Analysis</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => { setThreshold(0.24); setModelType('xgboost'); }}
+                      className="text-[11px] font-mono py-1.5 px-2 text-center rounded-xl border border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 cursor-pointer transition-colors"
+                    >
+                      High Recall (τ=0.24)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setThreshold(0.50); setModelType('xgboost'); }}
+                      className="text-[11px] font-mono py-1.5 px-2 text-center rounded-xl border border-indigo-500/30 bg-indigo-500/5 hover:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 cursor-pointer transition-colors"
+                    >
+                      Balanced F1 (τ=0.50)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setThreshold(0.78); setModelType('xgboost'); }}
+                      className="text-[11px] font-mono py-1.5 px-2 text-center rounded-xl border border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 cursor-pointer transition-colors"
+                    >
+                      High Prec (τ=0.78)
+                    </button>
+                  </div>
+                </div>
+
                 {/* Model Selector */}
                 <div>
                   <label className="text-xs font-mono text-neutral-500 block mb-2 uppercase tracking-wider">
